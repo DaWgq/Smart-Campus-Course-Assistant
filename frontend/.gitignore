@@ -1,0 +1,42 @@
+# ============================================================
+#  前端专用忽略规则（与根目录 .gitignore 配合使用）
+# ============================================================
+
+# 依赖（151MB+，必须忽略）
+node_modules/
+.pnpm-store/
+.yarn/cache
+.yarn/install-state.gz
+
+# 构建产物
+dist/
+build/
+*.local
+
+# 缓存
+.vite/
+.cache/
+.eslintcache
+.stylelintcache
+
+# 环境变量
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# 编辑器
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 日志
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-error.log*

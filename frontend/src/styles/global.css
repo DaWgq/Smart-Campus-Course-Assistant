@@ -1,0 +1,62 @@
+* { box-sizing: border-box; }
+html, body, #app { height: 100%; margin: 0; }
+
+/* 页面外壳：撑满视口，路由页作为 flex 子项自动填满，避免下方留白 */
+/* naive-ui 的 NConfigProvider / NMessageProvider 会渲染一层无高度的 div，
+   必须显式撑满，否则内部 height:100% 只能参照内容高度 */
+.n-config-provider, .n-message-provider { height: 100%; }
+.app-shell { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+.app-shell > * { flex: 1 1 auto; min-height: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #f5f7fa;
+  color: #303133;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #dcdfe6; border-radius: 4px; }
+
+.top-header { height: 60px; background: #fff; border-bottom: 1px solid #ebeef5; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; z-index: 20; }
+.brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+.brand h1 { font-size: 20px; font-weight: 700; margin: 0; }
+.logo-cal { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 17px; color: #fff; background: linear-gradient(135deg, #409eff, #2f7fe0); flex-shrink: 0; box-shadow: 0 2px 6px rgba(64,158,255,.35); }
+
+.main-body { flex: 1; display: flex; overflow: hidden; }
+.side-nav { width: 200px; background: #fff; border-right: 1px solid #ebeef5; padding-top: 12px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; }
+.side-nav .nav-link { display: flex; align-items: center; gap: 14px; padding: 14px 24px; font-size: 14px; color: #303133; text-decoration: none; }
+.side-nav .nav-link:hover { background: #f5f7fa; }
+.side-nav .nav-link.active { color: #409eff; font-weight: 500; background: rgba(236,245,255,.4); }
+.side-note { margin: 12px; padding: 16px; border-radius: 8px; background: #f5f7fa; border: 1px solid #ebeef5; font-size: 12px; color: #909399; }
+.content { flex: 1; padding: 20px; overflow: hidden; display: flex; flex-direction: column; background: #f5f7fa; }
+.card { background: #fff; border-radius: 6px; border: 1px solid #ebeef5; box-shadow: 0 1px 4px rgba(0,21,41,.06); }
+
+/* n-card 设为 height:100% 的 flex 列时，正文区默认是 block，
+   内部 flex:1 子项（如聊天滚动区）拿不到高度，需转成纵向 flex */
+.n-card { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+.n-card-content { display: flex; flex-direction: column; min-height: 0; flex: 1 1 auto; }
+
+.chat-scroll { flex: 1; background: #f7f8fa; border-radius: 8px; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+.bubble-ai { max-width: 82%; background: #fff; color: #303133; font-size: 14px; line-height: 1.7; padding: 12px 16px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.bubble-user { max-width: 78%; background: #409eff; color: #fff; font-size: 14px; line-height: 1.7; padding: 10px 16px; border-radius: 8px; align-self: flex-end; box-shadow: 0 1px 3px rgba(0,0,0,.05); white-space: pre-wrap; }
+.bubble-ai :deep(p) { margin: 0 0 8px; }
+.bubble-ai :deep(ul), .bubble-ai :deep(ol) { margin: 4px 0 8px; padding-left: 20px; }
+
+@keyframes typingDot { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+.typing-dots span { width: 6px; height: 6px; border-radius: 50%; background: #409eff; display: inline-block; margin-right: 4px; animation: typingDot 1.2s infinite ease-in-out; }
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+
+.sched-grid { min-width: 720px; border: 1px solid #ebeef5; border-radius: 8px; overflow: hidden; }
+.sched-head { display: grid; grid-template-columns: repeat(6, 1fr); background: #f5f7fa; border-bottom: 1px solid #ebeef5; text-align: center; font-size: 12px; font-weight: 700; color: #606266; }
+.sched-head > div { padding: 12px; border-right: 1px solid #ebeef5; }
+.sched-head > div:last-child { border-right: none; }
+.sched-row { display: grid; grid-template-columns: repeat(6, 1fr); border-bottom: 1px solid #ebeef5; font-size: 12px; }
+.sched-row:last-child { border-bottom: none; }
+.sched-cell { padding: 8px; border-right: 1px solid #ebeef5; min-height: 96px; }
+.sched-cell:last-child { border-right: none; }
+.course-chip { border-radius: 6px; border: 1px solid; padding: 10px; cursor: pointer; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+.chip-blue { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
+.chip-emerald { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+.chip-purple { background: #f5f3ff; border-color: #ddd6fe; color: #5b21b6; }
+.chip-amber { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+.chip-rose { background: #fff1f2; border-color: #fecdd3; color: #9f1239; }
+.chip-indigo { background: #eef2ff; border-color: #c7d2fe; color: #3730a3; }
